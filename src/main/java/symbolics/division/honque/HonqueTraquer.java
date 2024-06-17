@@ -20,6 +20,6 @@ public class HonqueTraquer {
     public static void inc(ServerWorld world) {
         world.getAttachedOrCreate(HONKS, () -> 0);
         world.modifyAttached(HONKS, h -> h + 1);
-        System.out.println(world.getAttachedOrCreate(HONKS, () -> 0));
+//        System.out.println(world.getAttachedOrCreate(HONKS, () -> 0));
     }
 }
