@@ -3,7 +3,8 @@
   "package": "symbolics.division.honque.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "EntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
