@@ -123,4 +123,8 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
         h.setItem(stack);
         return h;
     }
+
+    public Honk beep() {
+        return this.whatIDo;
+    }
 }

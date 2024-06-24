@@ -14,7 +14,7 @@ public class AscendantHonk implements Honk {
 
     @Override
     public float baseProbability() {
-        return 1/4f;
+        return 1/200f;
     }
 
     public static void launch(Entity victim, int power) {

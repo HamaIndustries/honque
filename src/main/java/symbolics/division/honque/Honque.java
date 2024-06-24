@@ -24,10 +24,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import symbolics.division.honque.magic.AscendantHonk;
-import symbolics.division.honque.magic.EphemeralHonk;
-import symbolics.division.honque.magic.StandardHonk;
-import symbolics.division.honque.magic.WompWomp;
+import symbolics.division.honque.magic.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +39,8 @@ public class Honque implements ModInitializer {
 	public static final TheFunny THE_FUNNY = registerFunny("the_funny", new TheFunny(new StandardHonk()));
 	public static final TheFunny THE_BLUE_FUNNY = registerFunny("the_blue_funny", new TheFunny(new EphemeralHonk()));
 	public static final TheFunny THE_GREEN_FUNNY = registerFunny("the_green_funny", new TheFunny(new AscendantHonk()));
+	public static final TheFunny THE_ORANGE_FUNNY = registerFunny("the_orange_funny", new TheFunny(new AlchemicalHonk()));
+	public static final TheFunny THE_GAY_FUNNY = registerFunny("the_gay_funny", new TheFunny(new HomosexualHonk()));
 	public static final EntityType<InterpersonalHarassmentEnabler> REALLY_FUNNY = EntityType.Builder.<InterpersonalHarassmentEnabler>create(InterpersonalHarassmentEnabler::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10).build();
 
 	@Override
