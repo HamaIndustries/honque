@@ -25,6 +25,10 @@ public class EphemeralHonk implements Honk {
         victim.noClip = true;
     }
 
+    public static void unpoof(Entity unvictim) {
+        unvictim.removeCommandTag(POOFED);
+    }
+
 
     @Override
     public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
