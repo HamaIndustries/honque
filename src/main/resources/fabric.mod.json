@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"symbolics.division.honque.HonqueClient"
+		],
+		"fabric-datagen": [
+			"symbolics.division.honque.IceCreamFactory"
 		]
 	},
 	"mixins": [

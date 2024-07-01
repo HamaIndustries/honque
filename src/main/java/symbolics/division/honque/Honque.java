@@ -1,22 +1,17 @@
 package symbolics.division.honque;
 
-import com.mojang.serialization.Codec;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
-import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -26,16 +21,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import symbolics.division.honque.magic.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class Honque implements ModInitializer {
 	public static final String MODID = "honque";
     public static final Logger LOGGER = LoggerFactory.getLogger("honque");
 
-	public static final ComponentType<Boolean> HONKED = ComponentType.<Boolean>builder().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL).build();
+	private static Set<Item> ALL_FUNNIES = new HashSet<>();
+
 	public static final TheFunny THE_FUNNY = registerFunny("the_funny", new TheFunny(new StandardHonk()));
 	public static final TheFunny THE_BLUE_FUNNY = registerFunny("the_blue_funny", new TheFunny(new EphemeralHonk()));
 	public static final TheFunny THE_GREEN_FUNNY = registerFunny("the_green_funny", new TheFunny(new AscendantHonk()));
@@ -43,21 +37,27 @@ public class Honque implements ModInitializer {
 	public static final TheFunny THE_GAY_FUNNY = registerFunny("the_gay_funny", new TheFunny(new HomosexualHonk()));
 	public static final EntityType<InterpersonalHarassmentEnabler> REALLY_FUNNY = EntityType.Builder.<InterpersonalHarassmentEnabler>create(InterpersonalHarassmentEnabler::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10).build();
 
+	public static final class Tags {
+		public static final TagKey<Item> FUNNIES = TagKey.of(RegistryKeys.ITEM, Identifier.of(MODID, "funnies"));
+	}
+
 	@Override
 	public void onInitialize() {
-		Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(MODID, "honked"), HONKED);
 		HonqueTraquer.init();
 		Registry.register(Registries.ENTITY_TYPE, Identifier.of(MODID, "hr_complaint"), REALLY_FUNNY);
 
 		PayloadTypeRegistry.playS2C().register(WompWomp.ID, WompWomp.PACKET_CODEC);
 		registerWompWomp(EphemeralHonk.WOMPWOMP, (w, p) -> EphemeralHonk.poof(p));
 		registerWompWomp(AscendantHonk.WOMPWOMP, (w, p) -> AscendantHonk.launch(p, w.value()));
+
+		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> EphemeralHonk.unpoof(newPlayer));
 	}
 
-	private static <Honquer extends Item> Honquer registerFunny(String path, Honquer theFunnyInQuestion) {
+	public static <Honquer extends Item> Honquer registerFunny(String path, Honquer theFunnyInQuestion) {
 		Registry.register(Registries.ITEM, Identifier.of(MODID, path), theFunnyInQuestion);
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> content.add(theFunnyInQuestion));
 		DispenserBlock.registerBehavior(theFunnyInQuestion, new ProjectileDispenserBehavior(theFunnyInQuestion));
+		ALL_FUNNIES.add(theFunnyInQuestion);
 		return theFunnyInQuestion;
 	}
 
@@ -67,6 +67,10 @@ public class Honque implements ModInitializer {
 	}
 	public static void doWompWomp(WompWomp w, PlayerEntity player) {
 		callbacks.get(w.action()).accept(w, player);
+	}
+
+	public static Set<Item> getAllFunnies() {
+		return Collections.unmodifiableSet(ALL_FUNNIES);
 	}
 
 }

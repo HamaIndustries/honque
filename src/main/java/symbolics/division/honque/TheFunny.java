@@ -23,7 +23,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import symbolics.division.honque.magic.EphemeralHonk;
 import symbolics.division.honque.magic.Honk;
 
 public class TheFunny extends Item implements Equipment, ProjectileItem {
@@ -32,7 +31,7 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
     private final Honk whatIDo;
 
     public TheFunny(Honk whatItDo) {
-        super(new Item.Settings().maxDamage(200).component(Honque.HONKED, false).component(Humorous.COMPONENT, true));
+        super(new Item.Settings().maxDamage(200));
         whatIDo = whatItDo;
         INSTANT_DEATH_CHANCE = whatItDo.baseProbability();
     }

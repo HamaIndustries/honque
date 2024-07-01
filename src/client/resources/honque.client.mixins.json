@@ -3,6 +3,7 @@
 	"package": "symbolics.division.honque.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"HeadFeatureRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

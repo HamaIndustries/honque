@@ -16,11 +16,9 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import symbolics.division.honque.Humorous;
+import symbolics.division.honque.Honque;
 import symbolics.division.honque.TheFunny;
-import symbolics.division.honque.magic.EphemeralHonk;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
@@ -31,7 +29,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "interact", at = @At("TAIL"), cancellable = true)
     public void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> ci) {
         if (this.getStackInHand(hand) != ItemStack.EMPTY) return;
-        if (entity instanceof LivingEntity e && e.getEquippedStack(EquipmentSlot.HEAD).getOrDefault(Humorous.COMPONENT, false)) {
+        if (entity instanceof LivingEntity e && e.getEquippedStack(EquipmentSlot.HEAD).isIn(Honque.Tags.FUNNIES)) {
             var s = e.getEquippedStack(EquipmentSlot.HEAD);
             var result = ((TheFunny)s.getRegistryEntry().value()).press((PlayerEntity) (Entity) this, e, e.getEquippedStack(EquipmentSlot.HEAD));
             if (result != null) {
