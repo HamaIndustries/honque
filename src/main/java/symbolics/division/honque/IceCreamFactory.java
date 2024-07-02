@@ -28,7 +28,8 @@ public class IceCreamFactory implements DataGeneratorEntrypoint {
 
     static {
         addCompat("the_ravenous_golden_funny");
-        addCompat("the_black_funny");
+        addCompat("the_bombastic_funny");
+        addCompat("the_funny_funny");
     }
 
     private static RegistryKey<Item> pls(Identifier id) {

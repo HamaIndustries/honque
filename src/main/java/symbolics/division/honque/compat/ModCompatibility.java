@@ -46,5 +46,6 @@ public interface ModCompatibility {
         Honque.LOGGER.debug("Loading compatibilities");
         tryInit("MawCompat", "magnificent-maw");
         tryInit("BombasticCompat", "bombastic");
+        tryInit("ConfettiCompat", "confetti");
     }
 }

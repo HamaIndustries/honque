@@ -29,7 +29,7 @@ public class BombasticCompat implements ModCompatibility {
 
     @Override
     public void initialize() {
-        Honque.registerFunny("compat/the_black_funny", new TheFunny(new ExplosiveHonk()));
+        Honque.registerFunny("compat/the_bombastic_funny", new TheFunny(new ExplosiveHonk()));
     }
 
     private static class ExplosiveHonk implements Honk {

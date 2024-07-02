@@ -18,6 +18,7 @@ import symbolics.division.honque.magic.Honk;
 public class MawCompat implements ModCompatibility {
 
     public void initialize() {
+        // why did it have to be ravenous?
         Honque.registerFunny("compat/the_ravenous_golden_funny", new TheFunny(new RavenousGoldenHonk()));
     }
 

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "honque:item/compat/the_black_funny"
+    "layer0": "honque:item/compat/the_bombastic_funny"
   }
 }

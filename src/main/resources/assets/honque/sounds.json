@@ -1,0 +1,8 @@
+{
+  "compat/confetti": {
+    "subtitle": "subtitles.honque.compat.yippee",
+    "sounds": [
+      "honque:compat/yippee"
+    ]
+  }
+}
