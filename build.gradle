@@ -53,7 +53,20 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+
+	// hasProperty("fabric-api.datagen")
+	boolean includeDepsAtRuntime = false
+	if (includeDepsAtRuntime) {
+		// For when you want to have a bad time
+		modApi "maven.modrinth:magnificent-maw:1.4.6"
+		modApi "maven.modrinth:confetti-lib:1.2.0+1.21"
+	} else {
+		// For when you want to have a good time
+		modCompileOnlyApi "maven.modrinth:magnificent-maw:1.4.6"
+		modCompileOnlyApi "maven.modrinth:confetti-lib:1.2.0+1.21"
+	}
+
+
 }
 
 processResources {

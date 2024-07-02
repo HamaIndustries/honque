@@ -3,6 +3,7 @@ package symbolics.division.honque;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.block.DispenserBlock;
@@ -16,9 +17,15 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.Main;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import symbolics.division.honque.compat.MawCompat;
+import symbolics.division.honque.compat.ModCompatibility;
 import symbolics.division.honque.magic.*;
 
 import java.util.*;
@@ -43,6 +50,8 @@ public class Honque implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("HONK HONK HONK");
+		ServerTickEvents.START_SERVER_TICK.register(Honque::tickSchedule);
 		HonqueTraquer.init();
 		Registry.register(Registries.ENTITY_TYPE, Identifier.of(MODID, "hr_complaint"), REALLY_FUNNY);
 
@@ -51,6 +60,8 @@ public class Honque implements ModInitializer {
 		registerWompWomp(AscendantHonk.WOMPWOMP, (w, p) -> AscendantHonk.launch(p, w.value()));
 
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> EphemeralHonk.unpoof(newPlayer));
+
+		ModCompatibility.init();
 	}
 
 	public static <Honquer extends Item> Honquer registerFunny(String path, Honquer theFunnyInQuestion) {
@@ -73,4 +84,22 @@ public class Honque implements ModInitializer {
 		return Collections.unmodifiableSet(ALL_FUNNIES);
 	}
 
+	// time
+	private static List<Pair<Integer, Runnable>> schedules = new ArrayList<>();
+	private static void tickSchedule(MinecraftServer server) {
+		schedules.removeIf( p -> {
+			if (p.getLeft() <= server.getTicks()) {
+				p.getRight().run();
+				return true;
+			}
+			return false;
+		});
+	}
+
+	public static void scheduleTick(@Nullable MinecraftServer server, int tickDelta, Runnable task) {
+		if (server == null) {
+			throw new NullPointerException("Attempted to schedule server tick on client");
+		}
+		schedules.add(new Pair<>(server.getTicks()+tickDelta, task));
+	}
 }
