@@ -13,7 +13,7 @@ import symbolics.division.honque.Honque;
 public class HomosexualHonk implements Honk {
     @Override
     public float baseProbability() {
-        return 1f/50;
+        return 1f/200;
     }
 
     public static SoundEvent[] sounds = {
@@ -51,5 +51,8 @@ public class HomosexualHonk implements Honk {
     @Override
     public void trulyUnfortunateCircumstance(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
         alternatives[player.getRandom().nextInt(alternatives.length)].trulyUnfortunateCircumstance(player, entity, itemStack, item);
+        RabbitEntity theBuny = new RabbitEntity(EntityType.RABBIT, player.getServerWorld());
+        theBuny.setVariant(RabbitEntity.RabbitType.EVIL);
+        player.getServerWorld().spawnEntity(theBuny);
     }
 }

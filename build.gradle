@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -31,6 +31,7 @@ repositories {
 	}
 
 	maven { url = "https://jitpack.io" }
+
 }
 
 loom {
@@ -49,7 +50,7 @@ fabricApi {
 	configureDataGeneration()
 }
 
-dependencies {
+dependencies { handler ->
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -59,15 +60,17 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// never run datagen with deps enabled
-	boolean includeDepsAtRuntime = true
+	boolean includeDepsAtRuntime = false
+	def deps = [
+		"maven.modrinth:magnificent-maw:1.4.6",
+		"maven.modrinth:confetti-lib:1.2.0+1.21",
+	]
 	if (includeDepsAtRuntime) {
 		// For when you want to have a bad time
-		modApi "maven.modrinth:magnificent-maw:1.4.6"
-		modApi "maven.modrinth:confetti-lib:1.2.0+1.21"
+		deps.forEach(d -> modApi d)
 	} else {
 		// For when you want to have a good time
-		modCompileOnlyApi "maven.modrinth:magnificent-maw:1.4.6"
-		modCompileOnlyApi "maven.modrinth:confetti-lib:1.2.0+1.21"
+		deps.forEach(d -> modCompileOnlyApi d)
 	}
 
 

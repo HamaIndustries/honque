@@ -13,7 +13,7 @@ public class EphemeralHonk implements Honk {
     public static final String WOMPWOMP = "ephemeral....";
 
     public float baseProbability() {
-        return 1f/100;
+        return 1f/200;
     }
 
     public static void poof(Entity victim) {

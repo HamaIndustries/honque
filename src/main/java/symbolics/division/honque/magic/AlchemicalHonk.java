@@ -16,7 +16,7 @@ import net.minecraft.util.math.Box;
 public class AlchemicalHonk implements Honk {
     @Override
     public float baseProbability() {
-        return 1f/100;
+        return 1f/200;
     }
 
     private void curse (LivingEntity victim) {

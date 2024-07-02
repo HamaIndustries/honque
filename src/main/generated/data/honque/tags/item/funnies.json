@@ -1,11 +1,14 @@
 {
   "values": [
-    "honque:the_gay_funny",
-    "honque:compat/the_ravenous_golden_funny",
-    "honque:the_orange_funny",
-    "honque:the_green_funny",
     "honque:the_funny",
     "honque:the_blue_funny",
+    "honque:the_orange_funny",
+    "honque:the_gay_funny",
+    "honque:the_green_funny",
+    {
+      "id": "honque:compat/the_black_funny",
+      "required": false
+    },
     {
       "id": "honque:compat/the_ravenous_golden_funny",
       "required": false
