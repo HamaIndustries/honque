@@ -26,7 +26,7 @@ public class AscendantHonk implements Honk {
 
     @Override
     public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
-        entity.playSound(SoundEvents.GOAT_HORN_SOUNDS.getFirst().value());
+        honk(player, entity, pick(entity, SoundEvents.GOAT_HORN_SOUNDS));
     }
 
     @Override

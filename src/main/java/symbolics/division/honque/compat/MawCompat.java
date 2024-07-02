@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import symbolics.division.honque.Honque;
@@ -56,6 +57,9 @@ public class MawCompat implements ModCompatibility {
                                 player.setStackInHand(hand, after);
                             }
                             player.clearActiveItem();
+                            player.getWorld().playSound(
+                                    null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1, 1
+                            );
                         }
                         return;
                     }
@@ -70,7 +74,7 @@ public class MawCompat implements ModCompatibility {
 
         @Override
         public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
-            entity.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE.value());
+            honk(player, entity, SoundEvents.ENTITY_GENERIC_EXPLODE.value());
         }
 
         @Override

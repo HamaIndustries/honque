@@ -1,6 +1,7 @@
 package symbolics.division.honque;
 
 import net.fabricmc.fabric.api.item.v1.EnchantingContext;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,10 +16,12 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
@@ -65,6 +68,10 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
                     whatIDo.badLuck((ServerPlayerEntity)player, entity, itemStack, this);
                 } else {
                     whatIDo.honk((ServerPlayerEntity)player, entity, itemStack, this);
+                    for (var dir : Direction.values()) {
+                        BlockPos bp = entity.getBlockPos().offset(dir);
+                        world.setBlockState(bp, world.getBlockState(bp).withIfExists(Properties.POWERED, true), Block.NOTIFY_ALL_AND_REDRAW);
+                    }
                 }
             }
             player.getWorld().addImportantParticle(ParticleTypes.CRIT, p.x, p.y, p.z, 0, 0, 0);

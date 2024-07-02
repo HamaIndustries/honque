@@ -45,6 +45,10 @@ loom {
 
 }
 
+fabricApi {
+	configureDataGeneration()
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -54,8 +58,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// hasProperty("fabric-api.datagen")
-	boolean includeDepsAtRuntime = false
+	// never run datagen with deps enabled
+	boolean includeDepsAtRuntime = true
 	if (includeDepsAtRuntime) {
 		// For when you want to have a bad time
 		modApi "maven.modrinth:magnificent-maw:1.4.6"
@@ -113,8 +117,4 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
-}
-
-fabricApi {
-	configureDataGeneration()
 }

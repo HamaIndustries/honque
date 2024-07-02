@@ -29,10 +29,9 @@ public class EphemeralHonk implements Honk {
         unvictim.removeCommandTag(POOFED);
     }
 
-
     @Override
     public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
-        entity.playSound(SoundEvents.ENTITY_RABBIT_HURT);
+        honk(player, entity, SoundEvents.ENTITY_PARROT_IMITATE_PHANTOM);
     }
 
     @Override

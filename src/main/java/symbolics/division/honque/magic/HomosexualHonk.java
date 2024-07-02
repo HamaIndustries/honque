@@ -1,20 +1,14 @@
 package symbolics.division.honque.magic;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import symbolics.division.honque.Honque;
-import symbolics.division.honque.TheFunny;
-
-import java.util.function.Consumer;
 
 public class HomosexualHonk implements Honk {
     @Override
@@ -32,7 +26,7 @@ public class HomosexualHonk implements Honk {
 
     @Override
     public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
-        entity.playSound(sounds[entity.getRandom().nextInt(sounds.length)]);
+        honk(player, entity, sounds);
     }
 
     @Override

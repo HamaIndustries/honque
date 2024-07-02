@@ -40,7 +40,7 @@ public class AlchemicalHonk implements Honk {
 
     @Override
     public void honk(ServerPlayerEntity player, LivingEntity entity, ItemStack itemStack, Item item) {
-        entity.playSound(SoundEvents.BLOCK_GLASS_BREAK);
+        honk(player, entity, SoundEvents.BLOCK_GLASS_BREAK);
     }
 
     @Override
