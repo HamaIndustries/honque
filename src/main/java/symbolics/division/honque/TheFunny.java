@@ -32,6 +32,7 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
 
     private final float INSTANT_DEATH_CHANCE;
     private final Honk whatIDo;
+    private static final int HEATUP = 10;
 
     public TheFunny(Honk whatItDo) {
         super(new Item.Settings().maxDamage(200));
@@ -54,7 +55,7 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
         );
         if (hit == null) return ActionResult.PASS;
         var p = hit.getPos();
-        if (Math.abs(p.y - entity.getEyeY()) < 0.4) {
+        if (Math.abs(p.y - entity.getEyeY()) < 0.4 && !player.getItemCooldownManager().isCoolingDown(this)) {
             if (!player.getWorld().isClient) {
                 ServerWorld world = (ServerWorld)player.getWorld();
                 HonqueTraquer.inc(world);
@@ -74,6 +75,7 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
                     }
                 }
             }
+            player.getItemCooldownManager().set(this, HEATUP);
             player.getWorld().addImportantParticle(ParticleTypes.CRIT, p.x, p.y, p.z, 0, 0, 0);
         }
         return ActionResult.success(true);
