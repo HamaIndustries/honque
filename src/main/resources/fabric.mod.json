@@ -39,6 +39,10 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"magnificent_maw": "*"
+		"magnificent-maw": "1.4.6",
+		"amarong": "1.0.12",
+		"confetti": "1.2.0",
+		"bombastic": "1.0.4"
+
 	}
 }

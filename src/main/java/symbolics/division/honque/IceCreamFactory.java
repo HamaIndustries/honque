@@ -30,10 +30,7 @@ public class IceCreamFactory implements DataGeneratorEntrypoint {
         addCompat("the_ravenous_golden_funny");
         addCompat("the_bombastic_funny");
         addCompat("the_funny_funny");
-    }
-
-    private static RegistryKey<Item> pls(Identifier id) {
-        return RegistryKey.of(RegistryKeys.ITEM, id);
+        addCompat("the_annihilation_funny");
     }
 
     @Override

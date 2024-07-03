@@ -47,5 +47,6 @@ public interface ModCompatibility {
         tryInit("MawCompat", "magnificent-maw");
         tryInit("BombasticCompat", "bombastic");
         tryInit("ConfettiCompat", "confetti");
+        tryInit("AmarongCompat", "amarong");
     }
 }

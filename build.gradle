@@ -63,7 +63,7 @@ dependencies { handler ->
 	boolean includeDepsAtRuntime = false
 	def deps = [
 		"maven.modrinth:magnificent-maw:1.4.6",
-		"maven.modrinth:confetti-lib:1.2.0+1.21",
+		"maven.modrinth:confetti-lib:1.2.0+1.21"
 	]
 	if (includeDepsAtRuntime) {
 		// For when you want to have a bad time
