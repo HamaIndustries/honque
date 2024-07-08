@@ -34,10 +34,8 @@ public class InterpersonalHarassmentEnabler extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity e = entityHitResult.getEntity();
-        if (e instanceof LivingEntity living && !e.isInvulnerable()) {
-            if (living.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.AIR)) {
-                living.equipStack(EquipmentSlot.HEAD, getStack());
-            }
+        if (e instanceof LivingEntity living && !e.isInvulnerable() && living.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.AIR)) {
+            living.equipStack(EquipmentSlot.HEAD, getStack());
         } else {
             this.dropStack(this.getStack());
         }

@@ -24,6 +24,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import symbolics.division.honque.magic.Honk;
@@ -56,6 +57,10 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
         if (hit == null) return ActionResult.PASS;
         var p = hit.getPos();
         if (Math.abs(p.y - entity.getEyeY()) < 0.4 && !player.getItemCooldownManager().isCoolingDown(this)) {
+
+            player.getItemCooldownManager().set(this, HEATUP);
+            player.getWorld().addImportantParticle(ParticleTypes.CRIT, p.x, p.y, p.z, 0, 0, 0);
+
             if (!player.getWorld().isClient) {
                 ServerWorld world = (ServerWorld)player.getWorld();
                 HonqueTraquer.inc(world);
@@ -69,16 +74,19 @@ public class TheFunny extends Item implements Equipment, ProjectileItem {
                     whatIDo.badLuck((ServerPlayerEntity)player, entity, itemStack, this);
                 } else {
                     whatIDo.honk((ServerPlayerEntity)player, entity, itemStack, this);
-                    for (var dir : Direction.values()) {
-                        BlockPos bp = entity.getBlockPos().offset(dir);
-                        world.setBlockState(bp, world.getBlockState(bp).withIfExists(Properties.POWERED, true), Block.NOTIFY_ALL_AND_REDRAW);
+                    var gm = entity instanceof ServerPlayerEntity playerEntity ? playerEntity.interactionManager.getGameMode() : null;
+                    if (gm != GameMode.ADVENTURE && ((ServerPlayerEntity)player).interactionManager.getGameMode() != GameMode.ADVENTURE) {
+                        for (var dir : Direction.values()) {
+                            BlockPos bp = entity.getBlockPos().offset(dir);
+                            world.setBlockState(bp, world.getBlockState(bp).withIfExists(Properties.POWERED, true), Block.NOTIFY_ALL_AND_REDRAW);
+                        }
                     }
-                }
+    }
             }
-            player.getItemCooldownManager().set(this, HEATUP);
-            player.getWorld().addImportantParticle(ParticleTypes.CRIT, p.x, p.y, p.z, 0, 0, 0);
+
+            return ActionResult.success(true);
         }
-        return ActionResult.success(true);
+        return ActionResult.PASS;
     }
 
     @Override
