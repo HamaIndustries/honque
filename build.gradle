@@ -70,7 +70,7 @@ dependencies { handler ->
 		deps.forEach(d -> modApi d)
 	} else {
 		// For when you want to have a good time
-		deps.forEach(d -> modCompileOnlyApi d)
+		deps.forEach(d -> modCompileOnly d)
 	}
 
 }

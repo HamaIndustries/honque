@@ -49,19 +49,25 @@ public class MawCompat implements ModCompatibility {
                     // fake LivingEntity.consumeItem()
                     if (stack.isIn(MagnificentMaw.SWORDLY_SWALLOWABLE)) {
                         int slot = inv.getSlotWithStack(stack);
-                        Hand hand = player.getActiveHand();
-                        if (player.getStackInHand(hand).isEmpty()) {
-                            inv.removeStack(slot);
-                            player.setStackInHand(hand, stack);
-                            ItemStack after = stack.finishUsing(player.getWorld(), player);
-                            if (after != stack) {
-                                player.setStackInHand(hand, after);
+                        if (slot != inv.selectedSlot) {
+                            ItemStack handItem = player.getStackInHand(Hand.MAIN_HAND);
+                            if (!handItem.isEmpty())  {
+                                // I THREW IT ON THE GROUND
+                                player.dropItem(handItem, false, true);
+                                inv.removeStack(inv.selectedSlot);
                             }
-                            player.clearActiveItem();
-                            player.getWorld().playSound(
-                                    null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1, 1
-                            );
                         }
+
+                        inv.removeStack(slot);
+                        inv.setStack(inv.selectedSlot, stack);
+                        ItemStack after = stack.finishUsing(player.getWorld(), player);
+                        if (after != stack) {
+                            inv.setStack(inv.selectedSlot, after);
+                        }
+                        player.clearActiveItem();
+                        player.getWorld().playSound(
+                                null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1, 1
+                        );
                         return;
                     }
                 }
